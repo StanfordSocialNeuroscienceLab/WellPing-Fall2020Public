@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Well Ping Dashboard - Fall 2020</title>
+
+    <style>
+      .each-value {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="margin: 20px">
+      <h3 id="to-bonus"></h3>
+
+      <p>
+        (You have completed
+        <span id="completed-pings-this-week-name"></span> this week.)
+      </p>
+    </div>
+
+    <script>
+      const urlParams = new URLSearchParams(window.location.search);
+
+      const completedPingsThisWeek = urlParams.get("completed_pings_this_week");
+      const username = urlParams.get("username");
+
+      function getPingName(count) {
+        if (count > 1) {
+          return " pings";
+        } else {
+          return " ping";
+        }
+      }
+
+      let completedPingsThisWeekName =
+        completedPingsThisWeek.toString() + getPingName(completedPingsThisWeek);
+      document.getElementById(
+        "completed-pings-this-week-name"
+      ).innerHTML = completedPingsThisWeekName;
+
+      const pingsAwayFromWeeklyBonus = 24 - completedPingsThisWeek;
+      if (pingsAwayFromWeeklyBonus <= 0) {
+        document.getElementById("to-bonus").innerHTML =
+          "You have reached the weekly bonus!";
+      } else {
+        document.getElementById("to-bonus").innerHTML =
+          "You are " +
+          pingsAwayFromWeeklyBonus.toString() +
+          getPingName(pingsAwayFromWeeklyBonus) +
+          " away from weekly bonus!";
+      }
+    </script>
+  </body>
+</html>
